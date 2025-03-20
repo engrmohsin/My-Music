@@ -12,7 +12,7 @@ const getMusic = async (req, res) => {
   }
 };
 
-const createMusic = asyncHandler(async (req, res) => {
+const createMusic = async (req, res) => {
   const { title, artist, category, url } = req.body;
 
   if (!title || !artist || !category || !url) {
@@ -34,7 +34,7 @@ const createMusic = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Invalid music data');
   }
-});
+};
 
 
 export { getMusic, createMusic };

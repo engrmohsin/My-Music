@@ -12,7 +12,7 @@ const getCategories = async (req, res) => {
   }
 };
 
-const createCategory = asyncHandler(async (req, res) => {
+const createCategory = async (req, res) => {
   const { name, description } = req.body;
 
   if (!name) {
@@ -39,6 +39,6 @@ const createCategory = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Invalid category data');
   }
-});
+};
 
 export { getCategories, createCategory };
