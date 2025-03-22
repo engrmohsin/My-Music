@@ -13,28 +13,28 @@ const getMusic = async (req, res) => {
 };
 
 const createMusic = async (req, res) => {
-  const { title, artist, category, url } = req.body;
+  const { title, artist, category, fileUrl, duration, releaseDate } = req.body;
 
-  if (!title || !artist || !category || !url) {
-    res.status(400);
-    throw new Error('All fields are required');
+  if (!title || !artist || !category || !fileUrl) {
+    return res.status(400).json({ message: "All required fields must be provided." });
   }
 
-  const music = await Music.create({
-    title,
-    artist,
-    category,
-    url,
-    user: req.user._id, // Store who uploaded the music
-  });
+  try {
+    const music = await Music.create({
+      title,
+      artist,
+      category,
+      fileUrl,
+      duration: duration || null, // Optional field
+      releaseDate: releaseDate ? new Date(releaseDate) : null, // Convert to Date format
+    });
 
-  if (music) {
     res.status(201).json(music);
-  } else {
-    res.status(400);
-    throw new Error('Invalid music data');
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
 
 
 export { getMusic, createMusic };
